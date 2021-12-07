@@ -694,4 +694,83 @@ public class Strings {
     public Text muted() {
         return Text.of(TextColors.RED, "\u0412\u044B \u043D\u0435 \u043C\u043E\u0436\u0435\u0442\u0435 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F");
     }
+
+    public Text plotNotFound(String name) {
+        return Text.of(
+                TextColors.RED, "\u041F\u043B\u043E\u0442 ",
+                TextColors.GOLD, name,
+                TextColors.RED, " \u043D\u0435 \u043D\u0430\u0439\u0434\u0451\u043D"
+        );
+    }
+
+    public Text plotDefaultNotAllowed() {
+        return Text.of(TextColors.RED, "\u041F\u043B\u043E\u0442 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F");
+    }
+
+    public Text plotDelete(String name) {
+        return Text.of(
+                TextColors.RED, "\u041F\u043B\u043E\u0442 ",
+                TextColors.GOLD, name,
+                TextColors.RED, " \u0443\u0434\u0430\u043B\u0451\u043D"
+        );
+    }
+
+    public Text plotGroup(String name) {
+        return Text.of(
+                TextColors.WHITE, "\u0413\u0440\u0443\u043F\u043F\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u043A \u043F\u043B\u043E\u0442\u0443 - ",
+                TextColors.GOLD, name
+        );
+    }
+
+    public Text plotGroupSet(String group) {
+        return Text.of(
+                TextColors.GREEN, "\u041D\u043E\u0432\u0430\u044F \u0433\u0440\u0443\u043F\u043F\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u0430 - ",
+                TextColors.GOLD, group,
+                TextColors.GREEN, " \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430"
+        );
+    }
+
+    public Text regionNotSelected() {
+        return Text.of(
+                TextColors.RED, "\u0420\u0435\u0433\u0438\u043E\u043D \u043D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D"
+        );
+    }
+
+    public Text plotSuccessMove() {
+        return Text.of(
+                TextColors.GREEN, "\u041F\u043B\u043E\u0442 \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u043F\u0435\u0440\u0435\u0434\u0432\u0438\u043D\u0443\u0442"
+        );
+    }
+
+    public Text plotAlreadyExist() {
+        return Text.of(
+                TextColors.RED, "\u041F\u043B\u043E\u0442 \u0441 \u0442\u0430\u043A\u0438\u043C ID \u0443\u0436\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442"
+        );
+    }
+
+    public Text plotAddPlayer(String name) {
+        return Text.of(
+                TextColors.GREEN, "\u0418\u0433\u0440\u043E\u043A",
+                TextColors.GOLD, name,
+                TextColors.GREEN, "\u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043E\u043A \u0440\u0430\u0437\u0440\u0435\u0448\u0451\u043D\u043D\u044B\u0445"
+        );
+    }
+
+    public Text plotPlayersList(List<String> players) {
+        return Text.of(
+                TextColors.WHITE, "\u0421\u043F\u0438\u0441\u043E\u043A \u0438\u0433\u0440\u043E\u043A\u043E\u0432 \u043F\u043B\u043E\u0442\u0430: ",
+                Text.joinWith(
+                        Text.of(TextColors.WHITE, ", "),
+                        players.stream().map(s -> Text.of(TextColors.GOLD, s)).collect(Collectors.toList())
+                )
+        );
+    }
+
+    public Text plotPlayersRemove(String name) {
+        return Text.of(
+                TextColors.GREEN, "\u041F\u043B\u043E\u0442 ",
+                TextColors.GOLD, name,
+                TextColors.GREEN, " \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0443\u0434\u0430\u043B\u0451\u043D"
+        );
+    }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Plot {
+    public String id;
     public String name;
     public Region2d region2d = null;
     public String group = "minister";

@@ -9,10 +9,7 @@ import wfplugin.wfplugin.WFPlugin;
 import wfplugin.wfplugin.storage.Position2d;
 import wfplugin.wfplugin.storage.Regions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static wfplugin.wfplugin.WFPlugin.strings;
 
@@ -24,8 +21,8 @@ public class Country {
     public ArrayList<String> citizens = new ArrayList<>();
     public ArrayList<String> wars = new ArrayList<>();
     public GroupManager groups = new GroupManager();
-    public ArrayList<Plot> plots = new ArrayList<>();
-    public Plot defaultPlot = new Plot("default", null, "default", Collections.emptyList());
+    public HashSet<Plot> plots = new HashSet<>();
+    public Plot defaultPlot = new Plot("default", "default", null, "default", Collections.emptyList());
     public int freeBlocks = 5000;
     public int id = -1;
 

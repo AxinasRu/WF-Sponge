@@ -8,6 +8,7 @@ import wfplugin.wfplugin.commands.country.economy.CountryBalance;
 import wfplugin.wfplugin.commands.country.economy.CountryDeposit;
 import wfplugin.wfplugin.commands.country.economy.CountryWithdraw;
 import wfplugin.wfplugin.commands.country.ministers.CountryMinister;
+import wfplugin.wfplugin.commands.country.plot.CountryPlot;
 import wfplugin.wfplugin.commands.country.war.CountryWar;
 
 public class CountryCommand extends Command {
@@ -43,6 +44,7 @@ public class CountryCommand extends Command {
                 new CountryBroadCast(),
                 new CountryInfo(),
                 new CountryBuyBlocks(),
+                new CountryPlot(),
                 new CountryList()
         };
     }
