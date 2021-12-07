@@ -7,7 +7,6 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.text.Text;
 import wfplugin.wfplugin.WFPlugin;
 import wfplugin.wfplugin.commands.Command;
-import wfplugin.wfplugin.storage.Region2d;
 import wfplugin.wfplugin.storage.country.Country;
 import wfplugin.wfplugin.storage.country.Plot;
 

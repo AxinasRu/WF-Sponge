@@ -27,6 +27,7 @@ public class CountryPlotGroup extends Command {
                 GenericArguments.string(Text.of("id"))
         };
     }
+
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {

@@ -3,7 +3,6 @@ package wfplugin.wfplugin.storage;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 public class ConfigManager {

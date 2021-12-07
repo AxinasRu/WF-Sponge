@@ -13,15 +13,15 @@ public class Position2d {
         this.z = location.getBlockZ();
     }
 
+    public Position2d(int x, int z) {
+        this.x = x;
+        this.z = z;
+    }
+
     @Override
     public String toString() {
         return "x:" + x +
                 ", z:" + z;
-    }
-
-    public Position2d(int x, int z) {
-        this.x = x;
-        this.z = z;
     }
 
     @Override

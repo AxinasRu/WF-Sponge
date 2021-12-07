@@ -1,6 +1,5 @@
 package wfplugin.wfplugin.commands.country.citizen;
 
-import org.spongepowered.api.Platform;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.CommandElement;
 import org.spongepowered.api.command.args.GenericArguments;
@@ -52,12 +51,12 @@ public class CountryCitizensRestrict extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            Player player = args.<Player>getOne("player").get();
+            Player player = args.<Player>getOne("player").orElseThrow(IllegalStateException::new);
             Optional<String> countryName = args.getOne("country");
             Country country;
             boolean hasRights = false;
             if (countryName.isPresent()) {
-                country = WFPlugin.countries.get(countryName.get());
+                country = WFPlugin.countries.get(countryName.orElseThrow(IllegalStateException::new));
                 hasRights = true;
             } else
                 country = WFPlugin.countries.getByCitizen(src.getName());

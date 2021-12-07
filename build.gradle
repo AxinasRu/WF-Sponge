@@ -16,8 +16,6 @@ plugins {
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
-//apply plugin: 'kotlin'
-
 
 group = 'wfplugin'
 version = '1.3'
@@ -30,7 +28,7 @@ repositories {
     }
     maven {
         name = 'dynmap-repo'
-        url = 'http://repo.mikeprimm.com'
+        url = 'https://repo.mikeprimm.com'
     }
     maven { url 'https://jitpack.io' }
 }

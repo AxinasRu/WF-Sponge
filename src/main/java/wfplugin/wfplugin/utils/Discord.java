@@ -22,9 +22,9 @@ import java.util.List;
 
 public class Discord implements EventListener {
     public static final String TOKEN = "NzkzMzczMTU2NDE3MDc3MjU5.X-rUVA.VR9FRWlXzqCckszDnrePpJjIw40";
+    private static final Discord discord = new Discord();
     private static Guild guild = null;
     private static JDA jda;
-    private static final Discord discord = new Discord();
 
     public static void init() {
         try {
@@ -38,7 +38,7 @@ public class Discord implements EventListener {
             guild = jda.getGuilds().get(0);
             jda.addEventListener(discord);
         } catch (LoginException | InterruptedException e) {
-            WFPlugin.error(e+"");
+            WFPlugin.error(e + "");
         }
     }
 

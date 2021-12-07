@@ -11,7 +11,8 @@ import wfplugin.wfplugin.storage.country.Country;
 
 import java.util.Optional;
 
-import static wfplugin.wfplugin.WFPlugin.*;
+import static wfplugin.wfplugin.WFPlugin.flushConfigs;
+import static wfplugin.wfplugin.WFPlugin.strings;
 
 public class CountryBuyBlocks extends Command {
     @Override
@@ -50,12 +51,12 @@ public class CountryBuyBlocks extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            int amount = args.<Integer>getOne("amount").get();
+            int amount = args.<Integer>getOne("amount").orElseThrow(IllegalStateException::new);
             Optional<String> countryName = args.getOne("country");
             Country country;
             boolean hasRights = false;
             if (countryName.isPresent()) {
-                country = WFPlugin.countries.get(countryName.get());
+                country = WFPlugin.countries.get(countryName.orElseThrow(IllegalStateException::new));
                 hasRights = true;
             } else
                 country = WFPlugin.countries.getByCitizen(src.getName());

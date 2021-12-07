@@ -73,10 +73,6 @@ import static wfplugin.wfplugin.storage.ConfigManager.loadOrCreate;
 )
 public class WFPlugin {
     public static WFPlugin plugin;
-
-    @Inject
-    private Logger logger;
-
     public static Bank bank;
     public static DiscordPlayers discordPlayers;
     public static Strings strings;
@@ -89,14 +85,67 @@ public class WFPlugin {
     public static HashMap<String, String> lastLocations = new HashMap<>();
     public static HashMap<String, ChatMode> chatMode = new HashMap<>();
     public static HashMap<String, Mute> mutes = new HashMap<>();
-
     public static TaskManager tasks = new TaskManager();
     private final Team hn = Team
             .builder()
             .name("wf")
             .nameTagVisibility(Visibilities.NEVER)
             .build();
+    @Inject
+    private Logger logger;
     private DynmapCommonAPI dynmapAPI;
+
+    public static void flushConfigs() {
+        try {
+            flush("config/wf/strings.json", strings);
+            flush("config/wf/bank.json", bank);
+            flush("config/wf/countries.json", countries);
+            flush("config/wf/discord.json", discordPlayers);
+            flush("config/wf/log.json", log);
+            flush("config/wf/tasks.json", tasks);
+        } catch (IOException e) {
+            error("Error while loading configs");
+            error(e + "");
+        }
+    }
+
+    static Stream<Player> getPlayersStream(
+            Collection<Player> onlinePlayers,
+            Player player, ChatMode chatMode, Country country, Text countryPrefix, Text textMessage, Text prefix, Text suffix
+    ) {
+        switch (chatMode) {
+            case LOCAL:
+                return onlinePlayers.stream().filter(player1 -> {
+                    boolean b = get2dScale(player1.getPosition(), player1.getPosition()) <= 200;
+                    if (!b && player.hasPermission("wf.admin.chat.local-spy"))
+                        player1.sendMessage(Text.of(strings.spy(), prefix, countryPrefix, suffix, " > ", textMessage));
+                    return b;
+                });
+            case GLOBAL:
+                return onlinePlayers.stream();
+            case COUNTRY:
+                return onlinePlayers.stream().filter(player1 -> country.citizens.contains(player1.getName()));
+            default:
+                throw new IllegalArgumentException("Invalid value: " + chatMode);
+        }
+    }
+
+    public static double get2dScale(Vector3d pos1, Vector3d pos2) {
+        return Math.sqrt(((int) Math.max(pos1.getX(), pos2.getX()) - (int) Math.min(pos1.getX(), pos2.getX())) * ((int) Math.max(pos1.getX(), pos2.getX()) - (int) Math.min(pos1.getX(), pos2.getX())) + ((int) Math.max(pos1.getZ(), pos2.getZ()) - (int) Math.min(pos1.getZ(), pos2.getZ())) * ((int) Math.max(pos1.getZ(), pos2.getZ()) - (int) Math.min(pos1.getZ(), pos2.getZ())));
+    }
+
+    public static void log(String text) {
+        plugin.logger.info(text);
+    }
+
+    public static void log(LogElement logElement) {
+        log(logElement + "");
+        log.add(logElement);
+    }
+
+    public static void error(String text) {
+        plugin.logger.error(text);
+    }
 
     @Listener
     public void onServerStart(GameStartingServerEvent event) {
@@ -154,20 +203,6 @@ public class WFPlugin {
             logger.error(e + "");
         }
         tasks.activate();
-    }
-
-    public static void flushConfigs() {
-        try {
-            flush("config/wf/strings.json", strings);
-            flush("config/wf/bank.json", bank);
-            flush("config/wf/countries.json", countries);
-            flush("config/wf/discord.json", discordPlayers);
-            flush("config/wf/log.json", log);
-            flush("config/wf/tasks.json", tasks);
-        } catch (IOException e) {
-            error("Error while loading configs");
-            error(e + "");
-        }
     }
 
     @Listener
@@ -353,43 +388,5 @@ public class WFPlugin {
                 messageSender, chatMode, country, countryPrefix, textMessage, prefix, suffix)
                 .forEach(player -> player.sendMessage(resultMessage));
         logger.info(resultMessage.toPlain());
-    }
-
-    static Stream<Player> getPlayersStream(
-            Collection<Player> onlinePlayers,
-            Player player, ChatMode chatMode, Country country, Text countryPrefix, Text textMessage, Text prefix, Text suffix
-    ) {
-        switch (chatMode) {
-            case LOCAL:
-                return onlinePlayers.stream().filter(player1 -> {
-                    boolean b = get2dScale(player1.getPosition(), player1.getPosition()) <= 200;
-                    if (!b && player.hasPermission("wf.admin.chat.local-spy"))
-                        player1.sendMessage(Text.of(strings.spy(), prefix, countryPrefix, suffix, " > ", textMessage));
-                    return b;
-                });
-            case GLOBAL:
-                return onlinePlayers.stream();
-            case COUNTRY:
-                return onlinePlayers.stream().filter(player1 -> country.citizens.contains(player1.getName()));
-            default:
-                throw new IllegalArgumentException("Invalid value: " + chatMode);
-        }
-    }
-
-    public static double get2dScale(Vector3d pos1, Vector3d pos2) {
-        return Math.sqrt(((int) Math.max(pos1.getX(), pos2.getX()) - (int) Math.min(pos1.getX(), pos2.getX())) * ((int) Math.max(pos1.getX(), pos2.getX()) - (int) Math.min(pos1.getX(), pos2.getX())) + ((int) Math.max(pos1.getZ(), pos2.getZ()) - (int) Math.min(pos1.getZ(), pos2.getZ())) * ((int) Math.max(pos1.getZ(), pos2.getZ()) - (int) Math.min(pos1.getZ(), pos2.getZ())));
-    }
-
-    public static void log(String text) {
-        plugin.logger.info(text);
-    }
-
-    public static void log(LogElement logElement) {
-        log(logElement + "");
-        log.add(logElement);
-    }
-
-    public static void error(String text) {
-        plugin.logger.error(text);
     }
 }

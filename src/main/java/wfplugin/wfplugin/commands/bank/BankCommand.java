@@ -1,6 +1,5 @@
 package wfplugin.wfplugin.commands.bank;
 
-import org.spongepowered.api.text.Text;
 import wfplugin.wfplugin.commands.Command;
 import wfplugin.wfplugin.commands.bank.admin.BankGiveMoney;
 import wfplugin.wfplugin.commands.bank.admin.BankSetBalance;

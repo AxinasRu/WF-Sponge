@@ -1,6 +1,5 @@
 package wfplugin.wfplugin.commands.country.citizen;
 
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.CommandElement;
 import org.spongepowered.api.command.args.GenericArguments;
@@ -10,6 +9,8 @@ import org.spongepowered.api.text.Text;
 import wfplugin.wfplugin.WFPlugin;
 import wfplugin.wfplugin.commands.Command;
 import wfplugin.wfplugin.storage.country.Country;
+
+import java.util.Optional;
 
 import static wfplugin.wfplugin.WFPlugin.flushConfigs;
 import static wfplugin.wfplugin.WFPlugin.strings;
@@ -46,7 +47,11 @@ public class CountryCitizensReject extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            Player player = args.<Player>getOne("player").get();
+            Optional<Player> playerOptional = args.getOne("player");
+            if (!playerOptional.isPresent())
+                throw new IllegalStateException();
+            Player player = playerOptional.get();
+
             Country country = WFPlugin.countries.getByCitizen(src.getName());
 
             if (country != null && country.isMinister(src.getName())) {

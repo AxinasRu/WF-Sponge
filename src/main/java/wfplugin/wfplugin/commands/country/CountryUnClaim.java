@@ -45,7 +45,7 @@ public class CountryUnClaim extends Command {
             Region2d selection = WFPlugin.selectedRegions.get(src.getName());
             if (country == null)
                 src.sendMessage(strings.countryNotSelected());
-            else if(selection == null || selection.size() == 0)
+            else if (selection == null || selection.size() == 0)
                 src.sendMessage(strings.selectionEmpty());
             else if (!country.isMinister(src.getName()))
                 src.sendMessage(strings.onlyMinisters());

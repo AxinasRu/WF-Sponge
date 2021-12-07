@@ -3,12 +3,10 @@ package wfplugin.wfplugin.storage;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static wfplugin.wfplugin.WFPlugin.log;
-
 public class Region2d {
     public ArrayList<Region2d> removed = new ArrayList<>();
-    private Position2d start, stop;
     public int id = -1;
+    private Position2d start, stop;
 
     public Region2d(Position2d start, Position2d stop) {
         this.start = start;
@@ -18,20 +16,20 @@ public class Region2d {
     public Region2d() {
     }
 
-    public void setStart(Position2d start) {
-        this.start = start;
-    }
-
-    public void setStop(Position2d stop) {
-        this.stop = stop;
-    }
-
     public Position2d getStart() {
         return start;
     }
 
+    public void setStart(Position2d start) {
+        this.start = start;
+    }
+
     public Position2d getStop() {
         return stop;
+    }
+
+    public void setStop(Position2d stop) {
+        this.stop = stop;
     }
 
     public Region2d getCorrected() {

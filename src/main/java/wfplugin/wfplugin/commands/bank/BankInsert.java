@@ -37,16 +37,16 @@ public class BankInsert extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            int amount = args.<Integer>getOne("amount").get();
+            int amount = args.<Integer>getOne("amount").orElse(0);
             CarriedInventory<? extends Carrier> inventory = ((Player) src).getInventory();
 
-            ItemType paperType = Sponge.getGame().getRegistry().getType(ItemType.class, "variedcommodities:money").get();
+            ItemType paperType = Sponge.getGame().getRegistry().getType(ItemType.class, "variedcommodities:money").orElseThrow(IllegalStateException::new);
             int papersMoney = clearGuiItems(paperType, amount / 100, inventory) * 100;
 
-            ItemType coinType = Sponge.getGame().getRegistry().getType(ItemType.class, "variedcommodities:coin_gold").get();
+            ItemType coinType = Sponge.getGame().getRegistry().getType(ItemType.class, "variedcommodities:coin_gold").orElseThrow(IllegalStateException::new);
             int coinsMoney = clearGuiItems(coinType, amount - papersMoney, inventory);
 
-			int toInsert = papersMoney + coinsMoney;
+            int toInsert = papersMoney + coinsMoney;
             bank.add(src, toInsert);
             src.sendMessage(strings.insertSuccess(toInsert));
             return CommandResult.success();

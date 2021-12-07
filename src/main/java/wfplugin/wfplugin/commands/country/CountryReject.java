@@ -1,11 +1,9 @@
 package wfplugin.wfplugin.commands.country;
 
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.CommandElement;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandExecutor;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import wfplugin.wfplugin.WFPlugin;
 import wfplugin.wfplugin.commands.Command;
@@ -46,7 +44,7 @@ public class CountryReject extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            String countryName = args.<String>getOne("country").get();
+            String countryName = args.<String>getOne("country").orElse("");
             Country country = WFPlugin.countries.get(countryName);
             if (country != null) {
                 String invite = WFPlugin.invites.get(src.getName());

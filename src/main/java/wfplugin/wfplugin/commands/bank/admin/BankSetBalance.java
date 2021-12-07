@@ -12,8 +12,6 @@ import wfplugin.wfplugin.commands.Command;
 import wfplugin.wfplugin.storage.log.LogElement;
 import wfplugin.wfplugin.storage.log.LogType;
 
-import java.util.Optional;
-
 import static wfplugin.wfplugin.WFPlugin.bank;
 import static wfplugin.wfplugin.WFPlugin.strings;
 
@@ -42,9 +40,9 @@ public class BankSetBalance extends Command {
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            int amount = args.<Integer>getOne("amount").get();
+            int amount = args.<Integer>getOne("amount").orElseThrow(IllegalStateException::new);
 
-            Object argPlayer = args.getOne("player").get();
+            Object argPlayer = args.getOne("player").orElseThrow(IllegalStateException::new);
 
             String consumer = null;
             if (argPlayer instanceof String)
