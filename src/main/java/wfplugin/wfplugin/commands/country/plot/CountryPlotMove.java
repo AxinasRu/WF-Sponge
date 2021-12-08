@@ -14,7 +14,7 @@ import wfplugin.wfplugin.storage.country.Plot;
 public class CountryPlotMove extends Command {
     @Override
     public String[] names() {
-        return new String[]{"plot"};
+        return new String[]{"move"};
     }
 
     @Override

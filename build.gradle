@@ -34,11 +34,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.spongepowered:spongeapi:7.3.0'
+    compileOnly 'org.spongepowered:spongeapi:7.3.0'
     annotationProcessor 'org.spongepowered:spongeapi:7.3.0'
     implementation("net.dv8tion:JDA:4.3.0_277")
     implementation("us.dynmap:DynmapCoreAPI:3.1:all")
-    compile 'com.google.guava:guava:31.0.1-jre'
+    compileOnly 'com.google.guava:guava:31.0.1-jre'
 
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 //    implementation 'com.github.webbukkit:dynmap-api:3.2.1'

@@ -86,7 +86,7 @@ public class WFPlugin {
     public static HashMap<String, ChatMode> chatMode = new HashMap<>();
     public static HashMap<String, Mute> mutes = new HashMap<>();
     public static TaskManager tasks = new TaskManager();
-    private final Team hn = Team
+    private final Team team = Team
             .builder()
             .name("wf")
             .nameTagVisibility(Visibilities.NEVER)
@@ -161,23 +161,26 @@ public class WFPlugin {
                 new CustomMessageCommand()
         ));
 
-        Sponge.getServer().getServerScoreboard().ifPresent(scoreboard -> scoreboard.registerTeam(hn));
+        Sponge.getServer().getServerScoreboard().ifPresent(scoreboard -> {
+            if (!scoreboard.getTeam(team.getName()).isPresent())
+                scoreboard.registerTeam(team);
+        });
 
         PluginManager pm = Sponge.getPluginManager();
         Optional<PluginContainer> dynmap = pm.getPlugin("dynmap");
         if (dynmap.isPresent()) {
             Optional<?> instance = dynmap.get().getInstance();
             instance.ifPresent(o -> dynmapAPI = (DynmapCommonAPI) o);
-        }
-        MarkerSet countryMarkers = dynmapAPI.getMarkerAPI().getMarkerSet("countryMarkers");
-        for (Country country : countries.countries) {
-            if (country.id == -1)
-                country.id = countries.newId();
-            for (Region2d region : country.regions.regions) {
-                String id = "country_" + country.id + "_" + region.id;
-                AreaMarker areaMarker = countryMarkers.findAreaMarker(id);
-                if (areaMarker == null)
-                    countryMarkers.createAreaMarker(id, country.name, false, "world", new double[]{region.getCorrected().getStart().x, region.getCorrected().getStop().x}, new double[]{region.getCorrected().getStart().z, region.getCorrected().getStop().z}, false);
+            MarkerSet countryMarkers = dynmapAPI.getMarkerAPI().getMarkerSet("countryMarkers");
+            for (Country country : countries.countries) {
+                if (country.id == -1)
+                    country.id = countries.newId();
+                for (Region2d region : country.regions.regions) {
+                    String id = "country_" + country.id + "_" + region.id;
+                    AreaMarker areaMarker = countryMarkers.findAreaMarker(id);
+                    if (areaMarker == null)
+                        countryMarkers.createAreaMarker(id, country.name, false, "world", new double[]{region.getCorrected().getStart().x, region.getCorrected().getStop().x}, new double[]{region.getCorrected().getStart().z, region.getCorrected().getStop().z}, false);
+                }
             }
         }
 //        Discord.init();
@@ -197,7 +200,7 @@ public class WFPlugin {
             discordPlayers = loadOrCreate("config/wf/discord.json", new DiscordPlayers());
             log = loadOrCreate("config/wf/log.json", new Log());
             tasks = loadOrCreate("config/wf/tasks.json", new TaskManager());
-
+            log(strings + "");
         } catch (IOException e) {
             logger.error("Error while loading configs");
             logger.error(e + "");
@@ -209,7 +212,10 @@ public class WFPlugin {
     public void playerJoinEvent(ClientConnectionEvent.Join e) {
         Player p = e.getTargetEntity();
         bank.players.putIfAbsent(p.getName(), 450);
-//        hn.addMember(p.getTeamRepresentation());
+
+
+        Sponge.getServer().getServerScoreboard().flatMap(scoreboard -> scoreboard.getTeam(team.getName())).ifPresent(team1 -> team1.addMember(p.getTeamRepresentation()));
+        log(p.getTeamRepresentation().toString());
 
         Country country = countries.get(p.getName());
         if (country != null) {
@@ -221,7 +227,6 @@ public class WFPlugin {
         }
 
         String message = strings.joinMessages.get(p.getName());
-        log(message);
         if (message == null)
             e.setMessageCancelled(true);
         else
@@ -277,7 +282,8 @@ public class WFPlugin {
             if (!name.equals(s)) {
                 lastLocations.put(player.getName(), name);
                 player.sendTitle(strings.parseActionBar(color, Text.of(name)));
-                byLocation.ifPresent(country -> log(player.getName() + " entered " + country.name));
+                String finalName = name;
+                byLocation.ifPresent(country -> log(player.getName() + " entered " + finalName));
             }
         } else
             lastLocations.remove(player.getName());

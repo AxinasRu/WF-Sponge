@@ -1,13 +1,13 @@
 package wfplugin.wfplugin.storage;
 
 import com.google.gson.Gson;
+import wfplugin.wfplugin.WFPlugin;
 
 import java.io.*;
-import java.lang.reflect.Type;
 
 public class ConfigManager {
 
-    public static <T> T load(String path, Type classOfT) throws IOException {
+    public static <T> T load(String path, Class<T> classOfT) throws IOException {
         Gson gson = new Gson();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             return gson.fromJson(br, classOfT);
@@ -28,17 +28,21 @@ public class ConfigManager {
     }
 
     public static <T> T loadOrCreate(String path, T orNotExist) throws IOException {
+        WFPlugin.log(orNotExist + "");
         File parentFile = new File(path).getParentFile();
-        if (!parentFile.isDirectory())
-            throw new IOException(parentFile + " must be directory");
-        if (!parentFile.exists())
+        if (!parentFile.exists()) {
+            if (!parentFile.isDirectory())
+                throw new IOException(parentFile + " must be directory");
             if (!parentFile.mkdirs())
                 throw new IOException("Can't create " + parentFile);
+        }
         try {
-            return ConfigManager.load(path, orNotExist.getClass());
+            WFPlugin.log(orNotExist.getClass() + "");
+            return ConfigManager.load(path, (Class<T>) orNotExist.getClass());
         } catch (IOException e) {
-            flush(path, orNotExist);
             return orNotExist;
+        } finally {
+            flush(path, orNotExist);
         }
     }
 }

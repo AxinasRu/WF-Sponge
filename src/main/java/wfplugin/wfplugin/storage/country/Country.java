@@ -29,7 +29,8 @@ public class Country {
     public Country(String name, String leader) {
         this.leader = leader;
         this.name = name;
-        citizens.add(leader);
+        addCitizen(leader);
+        addMinister(leader);
     }
 
     public Country(String name, String leader, ArrayList<String> citizens, Regions regions, ArrayList<String> restricted, ArrayList<String> banned, ArrayList<String> ministers, ArrayList<String> wars, int balance) {
@@ -52,7 +53,7 @@ public class Country {
     }
 
     public boolean isMinister(String player) {
-        return groups.getByPlayer(player).index >= Integer.MAX_VALUE;
+        return groups.getByPlayer(player).index >= Integer.MAX_VALUE || player.equals(leader);
     }
 
     public boolean isCitizen(String player) {

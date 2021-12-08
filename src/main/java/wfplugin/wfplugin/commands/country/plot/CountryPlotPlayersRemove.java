@@ -4,6 +4,7 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.CommandElement;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import wfplugin.wfplugin.WFPlugin;
 import wfplugin.wfplugin.commands.Command;
@@ -33,7 +34,7 @@ public class CountryPlotPlayersRemove extends Command {
     public CommandExecutor executor() {
         return (src, args) -> {
             String plotId = args.<String>getOne("id").orElse("");
-            String player = args.<String>getOne("player").orElse("");
+            Player player = args.<Player>getOne("player").get();
             Country country = WFPlugin.countries.getByCitizen(src.getName());
 
             if (!country.isMinister(src.getName()))
@@ -52,8 +53,8 @@ public class CountryPlotPlayersRemove extends Command {
             if (plot == null)
                 src.sendMessage(WFPlugin.strings.plotNotFound(plotId));
             else {
-                plot.players.remove(player);
-                src.sendMessage(WFPlugin.strings.plotPlayersRemove(player));
+                plot.players.remove(player.getName());
+                src.sendMessage(WFPlugin.strings.plotPlayersRemove(player.getName()));
             }
 
             return CommandResult.success();

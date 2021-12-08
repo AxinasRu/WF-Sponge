@@ -27,6 +27,7 @@ public class CountryPlot extends Command {
                 new CountryPlotMove(),
                 new CountryPlotNew(),
                 new CountryPlotPlayers(),
+                new CountryPlotList(),
                 new CountryPlotRename()
         };
     }

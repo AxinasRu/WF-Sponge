@@ -510,7 +510,7 @@ public class Strings {
             for (CountryGroup group : country.groups.groups) {
                 result.add(Text.of(
                         TextColors.WHITE, "Группа ",
-                        group.color, group.name,
+                        group.name,
                         TextColors.WHITE, ": ",
                         Text.joinWith(
                                 Text.of(TextColors.WHITE, ", "),
@@ -750,9 +750,9 @@ public class Strings {
 
     public Text plotAddPlayer(String name) {
         return Text.of(
-                TextColors.GREEN, "\u0418\u0433\u0440\u043E\u043A",
+                TextColors.GREEN, "\u0418\u0433\u0440\u043E\u043A ",
                 TextColors.GOLD, name,
-                TextColors.GREEN, "\u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043E\u043A \u0440\u0430\u0437\u0440\u0435\u0448\u0451\u043D\u043D\u044B\u0445"
+                TextColors.GREEN, " \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043E\u043A \u0440\u0430\u0437\u0440\u0435\u0448\u0451\u043D\u043D\u044B\u0445"
         );
     }
 
@@ -768,9 +768,26 @@ public class Strings {
 
     public Text plotPlayersRemove(String name) {
         return Text.of(
+                TextColors.GREEN, "\u0427\u043B\u0435\u043D \u043F\u043B\u043E\u0442\u0430 ",
+                TextColors.GOLD, name,
+                TextColors.GREEN, " \u0443\u0434\u0430\u043B\u0451\u043D \u0441 \u043F\u0440\u0430\u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0430"
+        );
+    }
+
+    public Text plotNew(String name) {
+        return Text.of(
                 TextColors.GREEN, "\u041F\u043B\u043E\u0442 ",
                 TextColors.GOLD, name,
-                TextColors.GREEN, " \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0443\u0434\u0430\u043B\u0451\u043D"
+                TextColors.GREEN, " \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u043D"
+        );
+    }
+
+    public Text plotNewName(String plotId, String plotName) {
+        return Text.of(
+                TextColors.GREEN, "\u041D\u043E\u0432\u043E\u0435 \u0438\u043C\u044F \u0434\u043B\u044F \u043F\u043B\u043E\u0442\u0430 ",
+                TextColors.GOLD, plotId,
+                TextColors.GREEN, " \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043E \u043D\u0430 ",
+                TextColors.GOLD, plotName
         );
     }
 }

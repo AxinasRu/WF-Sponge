@@ -10,6 +10,8 @@ import wfplugin.wfplugin.commands.Command;
 import wfplugin.wfplugin.storage.country.Country;
 import wfplugin.wfplugin.storage.country.Plot;
 
+import java.security.spec.ECField;
+
 public class CountryPlotRename extends Command {
     @Override
     public String[] names() {
@@ -52,8 +54,10 @@ public class CountryPlotRename extends Command {
 
             if (plot == null)
                 src.sendMessage(WFPlugin.strings.plotNotFound(plotId));
-            else
+            else {
+                src.sendMessage(WFPlugin.strings.plotNewName(plotId, plotName));
                 plot.name = plotName;
+            }
 
             return CommandResult.success();
         };

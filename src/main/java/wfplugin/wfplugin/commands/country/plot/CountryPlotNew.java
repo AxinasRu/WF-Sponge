@@ -57,7 +57,8 @@ public class CountryPlotNew extends Command {
             if (selected == null || selected.size() == 0)
                 src.sendMessage(WFPlugin.strings.regionNotSelected());
             else {
-                new Plot(plotId, plotName, selected.getCorrected(), plotGroup, new ArrayList<>(Collections.emptyList()));
+                country.plots.add(new Plot(plotId, plotName, selected.getCorrected(), plotGroup, new ArrayList<>(Collections.emptyList())));
+                src.sendMessage(WFPlugin.strings.plotNew(plotName));
             }
 
             return CommandResult.success();

@@ -2,17 +2,17 @@ package wfplugin.wfplugin.storage.country;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.text.format.TextColors;
+import wfplugin.wfplugin.WFPlugin;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 public class GroupManager {
     public ArrayList<CountryGroup> groups = new ArrayList<>(Arrays.asList(
-            new CountryGroup("restricted", "Ограниченный", "", 0, TextColors.GRAY),
-            new CountryGroup("default", "Житель", "", 1, TextColors.BLUE),
-            new CountryGroup("military", "Военный", "", 2, TextColors.DARK_GREEN),
-            new CountryGroup("minister", "Министр", "", Integer.MAX_VALUE, TextColors.RED)
+            new CountryGroup("restricted", "Ограниченный", "", 0),
+            new CountryGroup("default", "Житель", "", 1),
+            new CountryGroup("military", "Военный", "", 2),
+            new CountryGroup("minister", "Министр", "", Integer.MAX_VALUE)
     ));
 
     public HashMap<String, String> playerGroups = new HashMap<>();
@@ -64,13 +64,11 @@ public class GroupManager {
         return result;
     }
 
-    public List<Player> applyOnlinePlayersByGroup(String groupId, Consumer<Player> supplier) {
-        List<Player> result = new ArrayList<>();
+    public void applyOnlinePlayersByGroup(String groupId, Consumer<Player> supplier) {
         playerGroups.forEach((playerName, group) -> {
             if (group.equals(groupId))
                 Sponge.getServer().getPlayer(playerName).ifPresent(supplier);
         });
-        return result;
     }
 
     public boolean hasRights(String player, String groupName) {

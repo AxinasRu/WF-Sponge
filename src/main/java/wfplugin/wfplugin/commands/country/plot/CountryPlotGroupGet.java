@@ -10,15 +10,15 @@ import wfplugin.wfplugin.commands.Command;
 import wfplugin.wfplugin.storage.country.Country;
 import wfplugin.wfplugin.storage.country.Plot;
 
-public class CountryPlotPlayersList extends Command {
+public class CountryPlotGroupGet extends Command {
     @Override
     public String[] names() {
-        return new String[]{"list"};
+        return new String[]{"get"};
     }
 
     @Override
     public String permission() {
-        return "wf.country.plot.players.list";
+        return "wf.country.plot.group.get";
     }
 
     @Override
@@ -32,6 +32,7 @@ public class CountryPlotPlayersList extends Command {
     public CommandExecutor executor() {
         return (src, args) -> {
             String plotId = args.<String>getOne("id").orElse("");
+            String group = args.<String>getOne("group").orElse("");
             Country country = WFPlugin.countries.getByCitizen(src.getName());
 
             if (!country.isMinister(src.getName()))
@@ -50,7 +51,7 @@ public class CountryPlotPlayersList extends Command {
             if (plot == null)
                 src.sendMessage(WFPlugin.strings.plotNotFound(plotId));
             else
-                src.sendMessage(WFPlugin.strings.plotPlayersList(plot.players));
+                src.sendMessage(WFPlugin.strings.plotGroup(plot.group));
 
             return CommandResult.success();
         };
