@@ -42,6 +42,7 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import wfplugin.wfplugin.commands.CommandManager;
 import wfplugin.wfplugin.commands.DiscordCommand;
+import wfplugin.wfplugin.commands.WorldTeleport;
 import wfplugin.wfplugin.commands.bank.BankCommand;
 import wfplugin.wfplugin.commands.chat.ChatCommand;
 import wfplugin.wfplugin.commands.country.CountryCommand;
@@ -77,6 +78,7 @@ public class WFPlugin {
     public static DiscordPlayers discordPlayers;
     public static Strings strings;
     public static Countries countries;
+    public static OldPos oldPos;
     public static Log log;
     public static HashMap<String, Region2d> selectedRegions = new HashMap<>();
     public static HashMap<String, String> invites = new HashMap<>();
@@ -103,6 +105,7 @@ public class WFPlugin {
             flush("config/wf/discord.json", discordPlayers);
             flush("config/wf/log.json", log);
             flush("config/wf/tasks.json", tasks);
+            flush("config/wf/oldPos.json", oldPos);
         } catch (IOException e) {
             error("Error while loading configs");
             error(e + "");
@@ -158,6 +161,7 @@ public class WFPlugin {
                 new CountryCommand(),
                 new DiscordCommand(),
                 new ChatCommand(),
+                new WorldTeleport(),
                 new CustomMessageCommand()
         ));
 
@@ -200,6 +204,7 @@ public class WFPlugin {
             discordPlayers = loadOrCreate("config/wf/discord.json", new DiscordPlayers());
             log = loadOrCreate("config/wf/log.json", new Log());
             tasks = loadOrCreate("config/wf/tasks.json", new TaskManager());
+            oldPos = loadOrCreate("config/wf/oldPos.json", new OldPos());
             log(strings + "");
         } catch (IOException e) {
             logger.error("Error while loading configs");
