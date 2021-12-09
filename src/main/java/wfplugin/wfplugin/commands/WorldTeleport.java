@@ -46,8 +46,8 @@ public class WorldTeleport extends Command {
                 return CommandResult.success();
             }
 
-            WFPlugin.oldPos.putDeparsed(src, ((Player) src).getWorld().getName(), ((Player) src).getLocation());
             Location<World> deparsed = WFPlugin.oldPos.getDeparsed(src, world);
+            WFPlugin.oldPos.putDeparsed(src, ((Player) src).getWorld().getName(), ((Player) src).getLocation());
             ((Player) src).setLocation(deparsed);
             WFPlugin.flushConfigs();
             return CommandResult.success();
