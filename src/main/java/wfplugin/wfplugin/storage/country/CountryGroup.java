@@ -9,5 +9,6 @@ public class CountryGroup {
     public String id;
     public String name;
     public String permissions;
+    public String color;
     public int index;
 }

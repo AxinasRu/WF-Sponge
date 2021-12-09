@@ -52,6 +52,7 @@ import wfplugin.wfplugin.commands.custommessage.CustomMessageCommand;
 import wfplugin.wfplugin.storage.*;
 import wfplugin.wfplugin.storage.country.Countries;
 import wfplugin.wfplugin.storage.country.Country;
+import wfplugin.wfplugin.storage.country.CountryGroup;
 import wfplugin.wfplugin.storage.country.Plot;
 import wfplugin.wfplugin.storage.log.Log;
 import wfplugin.wfplugin.storage.log.LogElement;
@@ -369,22 +370,20 @@ public class WFPlugin {
         }
         Text countryPrefix = Text.EMPTY;
         if (country != null) {
-            TextColor color;
+            Text countryName;
             String status;
             if (country.isLeader(playerName)) {
-                color = TextColors.RED;
-                status = "\u041B\u0438\u0434\u0435\u0440 ";
-            } else if (country.isMinister(playerName)) {
-                color = TextColors.YELLOW;
-                status = "\u041C\u0438\u043D\u0438\u0441\u0442\u0440 ";
+                countryName = Text.of(TextColors.GOLD, country.name);
+                status = "\u041B\u0438\u0434\u0435\u0440";
             } else {
-                color = TextColors.BLUE;
-                status = "\u0413\u0440\u0430\u0436\u0434\u0430\u043D\u0438\u043D ";
+                CountryGroup byPlayer = country.groups.getByPlayer(playerName);
+                status = byPlayer.name;
+                countryName = getDeserialize(byPlayer.color + country.name);
             }
             countryPrefix = Text.of(
-                    TextActions.showText(Text.of(status, country.name)),
+                    TextActions.showText(Text.of(status, " ", country.name)),
                     TextColors.WHITE, "[",
-                    color, country.name,
+                    countryName,
                     TextColors.WHITE, "] "
             );
         }

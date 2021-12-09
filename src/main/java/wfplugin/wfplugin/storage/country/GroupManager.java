@@ -2,17 +2,16 @@ package wfplugin.wfplugin.storage.country;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
-import wfplugin.wfplugin.WFPlugin;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 public class GroupManager {
     public ArrayList<CountryGroup> groups = new ArrayList<>(Arrays.asList(
-            new CountryGroup("restricted", "Ограниченный", "", 0),
-            new CountryGroup("default", "Житель", "", 1),
-            new CountryGroup("military", "Военный", "", 2),
-            new CountryGroup("minister", "Министр", "", Integer.MAX_VALUE)
+            new CountryGroup("restricted", "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u043D\u044B\u0439", "", "&8", 0),
+            new CountryGroup("default", "\u0416\u0438\u0442\u0435\u043B\u044C", "", "&9", 1),
+            new CountryGroup("military", "\u0412\u043E\u0435\u043D\u043D\u044B\u0439", "", "&2", 2),
+            new CountryGroup("minister", "\u041C\u0438\u043D\u0438\u0441\u0442\u0440", "", "&e", Integer.MAX_VALUE)
     ));
 
     public HashMap<String, String> playerGroups = new HashMap<>();
