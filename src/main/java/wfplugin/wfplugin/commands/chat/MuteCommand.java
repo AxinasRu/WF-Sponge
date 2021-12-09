@@ -31,17 +31,17 @@ public class MuteCommand extends Command {
         return new CommandElement[]{
                 GenericArguments.player(Text.of("player")),
                 GenericArguments.optional(GenericArguments.dateTime(Text.of("date"))),
-                GenericArguments.string(Text.of("reason"))
+                GenericArguments.optional(GenericArguments.string(Text.of("reason")))
         };
     }
 
     @Override
     public CommandExecutor executor() {
         return (src, args) -> {
-            Player player = args.<Player>getOne("player").get();
+            Player player = args.<Player>getOne("player").orElseThrow(IllegalArgumentException::new);
             Optional<LocalDateTime> optionalDate = args.getOne("date");
             long date = optionalDate.map(localDateTime -> localDateTime.toEpochSecond(ZoneOffset.UTC)).orElse(-1L);
-            String reason = args.<String>getOne("reason").get();
+            String reason = args.<String>getOne("reason").orElse("You are muted");
 
             WFPlugin.mutes.remove(player.getName());
             WFPlugin.mutes.put(player.getName(), new Mute(date, reason));
@@ -50,6 +50,8 @@ public class MuteCommand extends Command {
                     WFPlugin.strings.tempMutePlayer(src, player, localDateTime)
             ).orElse(WFPlugin.strings.mutePlayer(src, player));
             Sponge.getServer().getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(muteString));
+
+            WFPlugin.flushConfigs();
 
             return CommandResult.success();
         };

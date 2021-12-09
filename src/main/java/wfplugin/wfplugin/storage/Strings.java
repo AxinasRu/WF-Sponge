@@ -679,7 +679,7 @@ public class Strings {
         return Text.of(
                 TextColors.GOLD, player.getName(),
                 TextColors.RED, " \u0431\u044B\u043B \u0437\u0430\u0433\u043B\u0443\u0448\u0435\u043D ",
-                TextColors.GOLD, admin
+                TextColors.GOLD, admin.getName()
         );
     }
 
@@ -797,6 +797,14 @@ public class Strings {
                 "\u0412\u044B\u0431\u0440\u0430\u043D \u043D\u0435\u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u043C\u0438\u0440. \u041D\u0430 \u0432\u044B\u0431\u043E\u0440: ",
                 TextColors.GOLD,
                 "world / mine"
+        );
+    }
+
+    public Text unMutePlayer(CommandSource admin, Player player) {
+        return Text.of(
+                TextColors.GOLD, admin.getName(),
+                TextColors.GREEN, " \u0441\u043D\u044F\u043B \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u043D\u0430 \u0447\u0430\u0442 \u0441 ",
+                TextColors.GOLD, player.getName()
         );
     }
 }

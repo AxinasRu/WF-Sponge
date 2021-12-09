@@ -45,6 +45,8 @@ import wfplugin.wfplugin.commands.DiscordCommand;
 import wfplugin.wfplugin.commands.WorldTeleport;
 import wfplugin.wfplugin.commands.bank.BankCommand;
 import wfplugin.wfplugin.commands.chat.ChatCommand;
+import wfplugin.wfplugin.commands.chat.MuteCommand;
+import wfplugin.wfplugin.commands.chat.UnMuteCommand;
 import wfplugin.wfplugin.commands.country.CountryCommand;
 import wfplugin.wfplugin.commands.custommessage.CustomMessageCommand;
 import wfplugin.wfplugin.storage.*;
@@ -83,7 +85,6 @@ public class WFPlugin {
     public static HashMap<String, Region2d> selectedRegions = new HashMap<>();
     public static HashMap<String, String> invites = new HashMap<>();
     public static HashMap<String, String> requests = new HashMap<>();
-    //Player - Country
     public static HashMap<String, String> lastLocations = new HashMap<>();
     public static HashMap<String, ChatMode> chatMode = new HashMap<>();
     public static HashMap<String, Mute> mutes = new HashMap<>();
@@ -161,6 +162,8 @@ public class WFPlugin {
                 new CountryCommand(),
                 new DiscordCommand(),
                 new ChatCommand(),
+                new MuteCommand(),
+                new UnMuteCommand(),
                 new WorldTeleport(),
                 new CustomMessageCommand()
         ));
@@ -342,7 +345,7 @@ public class WFPlugin {
         if (mute != null)
             if (mute.endTime == -1 || System.currentTimeMillis() < mute.endTime) {
                 messageSender.sendMessage(strings.muted());
-                e.setCancelled(true);
+                e.setMessageCancelled(true);
             } else
                 mutes.remove(messageSender.getName());
         if (e.isMessageCancelled()) return;
@@ -352,9 +355,10 @@ public class WFPlugin {
         String playerName = messageSender.getName();
         ChatMode chatMode = WFPlugin.chatMode.get(playerName);
         if (chatMode == null)
-            if (plain.startsWith("!"))
+            if (plain.startsWith("!")) {
+                plain = plain.substring(1);
                 chatMode = ChatMode.GLOBAL;
-            else
+            } else
                 chatMode = ChatMode.LOCAL;
 
         Country country = countries.getByCitizen(playerName);
@@ -393,7 +397,13 @@ public class WFPlugin {
         Text prefix = getDeserialize(user.getCachedData().getMetaData().getPrefix());
         Text suffix = getDeserialize(user.getCachedData().getMetaData().getSuffix());
         Text chatModePrefix = chatMode.prefix;
-        Text resultMessage = Text.of(chatModePrefix, prefix, countryPrefix, suffix, " > ", textMessage);
+
+        Text.Builder senderNameText = Text.builder()
+                .onHover(TextActions.showText(Text.of(TextColors.WHITE, "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u0434\u043B\u044F ", TextColors.GOLD, "/msg " + playerName)))
+                .onClick(TextActions.suggestCommand("/msg " + playerName + " "))
+                .append(Text.of(playerName));
+
+        Text resultMessage = Text.of(chatModePrefix, prefix, countryPrefix, senderNameText, suffix, " > ", textMessage);
         getPlayersStream(
                 Sponge.getServer().getOnlinePlayers(),
                 messageSender, chatMode, country, countryPrefix, textMessage, prefix, suffix)
