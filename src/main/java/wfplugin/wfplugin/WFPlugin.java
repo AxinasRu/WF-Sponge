@@ -55,6 +55,7 @@ import wfplugin.wfplugin.storage.country.Country;
 import wfplugin.wfplugin.storage.country.Plot;
 import wfplugin.wfplugin.storage.log.Log;
 import wfplugin.wfplugin.storage.log.LogElement;
+import wfplugin.wfplugin.utils.Discord;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -190,13 +191,13 @@ public class WFPlugin {
                 }
             }
         }
-//        Discord.init();
+        Discord.init();
     }
 
     @Listener
     public void onServerStop(GameStoppingServerEvent event) {
         flushConfigs();
-//        Discord.shutdown();
+        Discord.shutdown();
     }
 
     private void loadConfigs() {
