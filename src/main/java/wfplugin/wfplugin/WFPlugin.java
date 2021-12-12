@@ -175,23 +175,23 @@ public class WFPlugin {
                 scoreboard.registerTeam(team);
         });
 
-        PluginManager pm = Sponge.getPluginManager();
-        Optional<PluginContainer> dynmap = pm.getPlugin("dynmap");
-        if (dynmap.isPresent()) {
-            Optional<?> instance = dynmap.get().getInstance();
-            instance.ifPresent(o -> dynmapAPI = (DynmapCommonAPI) o);
-            MarkerSet countryMarkers = dynmapAPI.getMarkerAPI().getMarkerSet("countryMarkers");
-            for (Country country : countries.countries) {
-                if (country.id == -1)
-                    country.id = countries.newId();
-                for (Region2d region : country.regions.regions) {
-                    String id = "country_" + country.id + "_" + region.id;
-                    AreaMarker areaMarker = countryMarkers.findAreaMarker(id);
-                    if (areaMarker == null)
-                        countryMarkers.createAreaMarker(id, country.name, false, "world", new double[]{region.getCorrected().getStart().x, region.getCorrected().getStop().x}, new double[]{region.getCorrected().getStart().z, region.getCorrected().getStop().z}, false);
-                }
-            }
-        }
+//        PluginManager pm = Sponge.getPluginManager();
+//        Optional<PluginContainer> dynmap = pm.getPlugin("dynmap");
+//        if (dynmap.isPresent()) {
+//            Optional<?> instance = dynmap.get().getInstance();
+//            instance.ifPresent(o -> dynmapAPI = (DynmapCommonAPI) o);
+//            MarkerSet countryMarkers = dynmapAPI.getMarkerAPI().getMarkerSet("countryMarkers");
+//            for (Country country : countries.countries) {
+//                if (country.id == -1)
+//                    country.id = countries.newId();
+//                for (Region2d region : country.regions.regions) {
+//                    String id = "country_" + country.id + "_" + region.id;
+//                    AreaMarker areaMarker = countryMarkers.findAreaMarker(id);
+//                    if (areaMarker == null)
+//                        countryMarkers.createAreaMarker(id, country.name, false, "world", new double[]{region.getCorrected().getStart().x, region.getCorrected().getStop().x}, new double[]{region.getCorrected().getStart().z, region.getCorrected().getStop().z}, false);
+//                }
+//            }
+//        }
         Discord.init();
     }
 
