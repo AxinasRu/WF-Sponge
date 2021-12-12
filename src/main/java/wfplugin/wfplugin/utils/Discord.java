@@ -62,7 +62,8 @@ public class Discord implements EventListener {
     }
 
     public static void shutdown() {
-        jda.shutdownNow();
+        if (jda != null)
+            jda.shutdownNow();
     }
 
     public static String integrate(String nick, String tag) {
