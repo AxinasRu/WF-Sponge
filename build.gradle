@@ -49,6 +49,10 @@ repositories {
         name = 'dynmap-repo'
         url = 'https://repo.mikeprimm.com'
     }
+//    maven {
+//        name = 'virtualchest'
+//        url = 'https://dl.bintray.com/zzzz/VirtualChest'
+//    }
     maven { url 'https://jitpack.io' }
 }
 
@@ -56,6 +60,7 @@ dependencies {
     compileOnly 'org.spongepowered:spongeapi:7.3.0'
     annotationProcessor 'org.spongepowered:spongeapi:7.3.0'
 
+//    compile 'com.github.ustc_zzzz:VirtualChestAPI:1.+'
     compileOnly 'net.luckperms:api:5.3'
     implementation("us.dynmap:DynmapCoreAPI:3.1:all")
     implementation("net.dv8tion:JDA:4.3.0_277")
