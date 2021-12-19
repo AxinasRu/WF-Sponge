@@ -23,7 +23,7 @@ public class MuteCommand extends Command {
 
     @Override
     public String permission() {
-        return "wf.chat.mute";
+        return "wf.admin.chat.mute";
     }
 
     @Override

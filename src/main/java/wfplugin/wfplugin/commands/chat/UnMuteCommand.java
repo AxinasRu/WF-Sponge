@@ -18,7 +18,7 @@ public class UnMuteCommand extends Command {
 
     @Override
     public String permission() {
-        return "wf.chat.unmute";
+        return "wf.admin.chat.unmute";
     }
 
     @Override

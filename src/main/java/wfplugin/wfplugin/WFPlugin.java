@@ -5,8 +5,6 @@ import com.google.inject.Inject;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.dynmap.DynmapCommonAPI;
-import org.dynmap.markers.AreaMarker;
-import org.dynmap.markers.MarkerSet;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
@@ -28,8 +26,6 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.plugin.PluginContainer;
-import org.spongepowered.api.plugin.PluginManager;
 import org.spongepowered.api.scoreboard.Team;
 import org.spongepowered.api.scoreboard.Visibilities;
 import org.spongepowered.api.text.Text;
@@ -122,9 +118,9 @@ public class WFPlugin {
         switch (chatMode) {
             case LOCAL:
                 return onlinePlayers.stream().filter(player1 -> {
-                    boolean b = get2dScale(player1.getPosition(), player1.getPosition()) <= 200;
-                    if (!b && player.hasPermission("wf.admin.chat.local-spy"))
-                        player1.sendMessage(Text.of(strings.spy(), prefix, countryPrefix, suffix, " > ", textMessage));
+                    boolean b = get2dScale(player.getPosition(), player1.getPosition()) <= 200;
+                    if (!b && player1.hasPermission("wf.admin.chat.local-spy"))
+                        player1.sendMessage(Text.of(strings.spy(), prefix, countryPrefix, player.getName(), suffix, " > ", textMessage));
                     return b;
                 });
             case GLOBAL:
@@ -406,8 +402,16 @@ public class WFPlugin {
         Text resultMessage = Text.of(chatModePrefix, prefix, countryPrefix, senderNameText, suffix, " > ", textMessage);
         getPlayersStream(
                 Sponge.getServer().getOnlinePlayers(),
-                messageSender, chatMode, country, countryPrefix, textMessage, prefix, suffix)
+                messageSender,
+                chatMode,
+                country,
+                countryPrefix,
+                textMessage,
+                prefix,
+                suffix
+        )
                 .forEach(player -> player.sendMessage(resultMessage));
+
         logger.info(resultMessage.toPlain());
     }
 }

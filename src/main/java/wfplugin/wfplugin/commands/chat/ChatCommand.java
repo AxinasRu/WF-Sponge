@@ -17,7 +17,7 @@ public class ChatCommand extends Command {
 
     @Override
     public String permission() {
-        return "wf.chat.use";
+        return "wf.chat.change";
     }
 
     @Override
