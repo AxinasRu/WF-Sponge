@@ -152,6 +152,7 @@ public class WFPlugin {
     @Listener
     public void onServerStart(GameStartingServerEvent event) {
         plugin = this;
+        log("Loading WFPlugin..");
         loadConfigs();
 
         Sponge.getPluginManager().getPlugin("wfplugin").ifPresent(pluginContainer -> CommandManager.registerCommands(
@@ -189,6 +190,7 @@ public class WFPlugin {
 //            }
 //        }
         Discord.init();
+        log("Loaded");
     }
 
     @Listener
@@ -206,7 +208,6 @@ public class WFPlugin {
             log = loadOrCreate("config/wf/log.json", new Log());
             tasks = loadOrCreate("config/wf/tasks.json", new TaskManager());
             oldPos = loadOrCreate("config/wf/oldPos.json", new OldPos());
-            log(strings + "");
         } catch (IOException e) {
             logger.error("Error while loading configs");
             logger.error(e + "");

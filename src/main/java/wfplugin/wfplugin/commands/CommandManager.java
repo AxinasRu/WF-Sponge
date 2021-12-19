@@ -39,9 +39,7 @@ public class CommandManager {
     }
 
     public static void registerCommands(PluginContainer plugin, Command... commands) {
-        for (Command command : commands) {
-            log(Arrays.toString(command.names()));
+        for (Command command : commands)
             Sponge.getCommandManager().register(plugin, parseCommand(command), command.names());
-        }
     }
 }

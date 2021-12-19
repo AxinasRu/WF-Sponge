@@ -28,7 +28,6 @@ public class ConfigManager {
     }
 
     public static <T> T loadOrCreate(String path, T orNotExist) throws IOException {
-        WFPlugin.log(orNotExist + "");
         File parentFile = new File(path).getParentFile();
         if (!parentFile.exists()) {
             if (!parentFile.isDirectory())
@@ -37,7 +36,6 @@ public class ConfigManager {
                 throw new IOException("Can't create " + parentFile);
         }
         try {
-            WFPlugin.log(orNotExist.getClass() + "");
             return ConfigManager.load(path, (Class<T>) orNotExist.getClass());
         } catch (IOException e) {
             return orNotExist;
